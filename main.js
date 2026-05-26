@@ -38,7 +38,23 @@ class Tree {
     const root = this.build(arr, 0, arr.length - 1);
     return root;
   }
-  includes(value) {}
+  includes(value) {
+    if (!this.root) return false;
+    let stack = [this.root];
+    while (stack.length !== 0) {
+      const node = stack.pop();
+      if (node.data === value) {
+        return true;
+      }
+      if (value > node.data && node.right) {
+        stack.push(node.right);
+      }
+      if (value < node.data && node.left) {
+        stack.push(node.left);
+      }
+    }
+    return false;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -54,5 +70,6 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 // craft
 const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
 prettyPrint(tree.root);
+console.log(tree.includes(1));
 
 export { Tree };
