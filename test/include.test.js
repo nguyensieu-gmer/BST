@@ -13,6 +13,7 @@ describe("test with not empty tree", () => {
     expect(t.includes(1)).toBe(true);
     expect(t.includes(6)).toBe(true);
     expect(t.includes(11)).toBe(false);
+    expect(t.includes(5)).toBe(true);
   });
 });
 
