@@ -56,7 +56,7 @@ class Tree {
     return false;
   }
   insert(value) {
-    this.insertIntoTree(this.root, value);
+    this.root = this.insertIntoTree(this.root, value);
   }
   insertIntoTree(root, value) {
     if (root === null) {
@@ -69,6 +69,37 @@ class Tree {
       root.right = this.insertIntoTree(root.right, value);
     }
     return root;
+  }
+  findSuccessor(root) {
+    let currNode = root.right;
+    while (currNode && currNode.left) {
+      currNode = currNode.left;
+    }
+    return currNode;
+  }
+  delete(root, value) {
+    if (!root) return null;
+
+    if (value > root.data) {
+      root.right = this.delete(root.right, value);
+    } else if (value < root.data) {
+      root.left = this.delete(root.left, value);
+    } else {
+      if (!root.left) {
+        return root.right;
+      }
+      if (!root.right) {
+        return root.left;
+      }
+
+      const successor = this.findSuccessor(root);
+      root.data = successor.data;
+      root.right = this.delete(root.right, successor.data);
+    }
+    return root;
+  }
+  deleteItem(value) {
+    this.root = this.delete(this.root, value);
   }
 }
 
@@ -83,8 +114,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // craft
-const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
-tree.insert(0);
+const tree = new Tree();
+tree.insert(5);
 prettyPrint(tree.root);
 
 export { Tree };
