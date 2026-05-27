@@ -174,6 +174,28 @@ class Tree {
     }
     callback(root.data);
   }
+  height(value) {
+    const node = this.findNode(this.root, value);
+    if (!node) return node;
+  }
+  findHeightOf(root, node) {}
+  findNode(root, value) {
+    if (!root) {
+      return undefined;
+    }
+    if (root.data === value) {
+      return root;
+    }
+    const findLeft = this.findNode(root.left, value);
+    if (findLeft) {
+      return findLeft;
+    }
+    const findRight = this.findNode(root.right, value);
+    if (findRight) {
+      return findRight;
+    }
+    return undefined;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -187,9 +209,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // craft
-//[10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]
-const tree = new Tree([1, 2, 3, 4, 5]);
-tree.postOrderForEach(console.log);
+const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
 prettyPrint(tree.root);
 
 export { Tree };
