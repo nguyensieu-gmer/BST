@@ -101,6 +101,25 @@ class Tree {
   deleteItem(value) {
     this.root = this.delete(this.root, value);
   }
+  levelOrderForEach(callback) {
+    if (typeof callback !== "function") {
+      throw Error("callback is not function");
+    }
+    if (!this.root) {
+      return;
+    }
+    let queue = [this.root];
+    while (queue.length !== 0) {
+      const node = queue.shift();
+      callback(node.data);
+      if (node.left) {
+        queue.push(node.left);
+      }
+      if (node.right) {
+        queue.push(node.right);
+      }
+    }
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -114,8 +133,8 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // craft
-const tree = new Tree();
-tree.insert(5);
+const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
+tree.levelOrderForEach(console.log);
 prettyPrint(tree.root);
 
 export { Tree };
