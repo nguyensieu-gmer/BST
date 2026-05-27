@@ -156,6 +156,24 @@ class Tree {
       this.preOrderTraversal(root.right, callback);
     }
   }
+  postOrderForEach(callback) {
+    if (typeof callback !== "function") {
+      throw Error("callback is not function");
+    }
+    this.postOrderTraversal(this.root, callback);
+  }
+  postOrderTraversal(root, callback) {
+    if (!root) {
+      return;
+    }
+    if (root.left) {
+      this.postOrderTraversal(root.left, callback);
+    }
+    if (root.right) {
+      this.postOrderTraversal(root.right, callback);
+    }
+    callback(root.data);
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -169,8 +187,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // craft
-const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
-tree.preOrderForEach(console.log);
+//[10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]
+const tree = new Tree([1, 2, 3, 4, 5]);
+tree.postOrderForEach(console.log);
 prettyPrint(tree.root);
 
 export { Tree };
