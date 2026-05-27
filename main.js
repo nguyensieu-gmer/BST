@@ -177,8 +177,24 @@ class Tree {
   height(value) {
     const node = this.findNode(this.root, value);
     if (!node) return node;
+    return this.findHeightOf(node);
   }
-  findHeightOf(root, node) {}
+  findHeightOf(root) {
+    if (!root) return 0;
+    let res = 0;
+    const queue = [[root, 0]];
+    while (queue.length !== 0) {
+      const [node, height] = queue.shift();
+      res = Math.max(res, height);
+      if (node.left) {
+        queue.push([node.left, height + 1]);
+      }
+      if (node.right) {
+        queue.push([node.right, height + 1]);
+      }
+    }
+    return res;
+  }
   findNode(root, value) {
     if (!root) {
       return undefined;
@@ -211,5 +227,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 // craft
 const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
 prettyPrint(tree.root);
+console.log(tree.findNode(tree.root, 5));
+console.log(tree.findHeightOf(tree.findNode(tree.root, 5)));
 
 export { Tree };
