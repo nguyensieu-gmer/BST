@@ -175,7 +175,7 @@ class Tree {
     callback(root.data);
   }
   height(value) {
-    const node = this.findNode(this.root, value);
+    const node = this.findNode(value);
     if (!node) return node;
     return this.findHeightOf(node);
   }
@@ -195,20 +195,16 @@ class Tree {
     }
     return res;
   }
-  findNode(root, value) {
-    if (!root) {
-      return undefined;
-    }
-    if (root.data === value) {
-      return root;
-    }
-    const findLeft = this.findNode(root.left, value);
-    if (findLeft) {
-      return findLeft;
-    }
-    const findRight = this.findNode(root.right, value);
-    if (findRight) {
-      return findRight;
+  findNode(value) {
+    let node = this.root;
+    while (node) {
+      if (value === node.data) {
+        return node;
+      } else if (value > node.data) {
+        node = node.right;
+      } else {
+        node = node.left;
+      }
     }
     return undefined;
   }
