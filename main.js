@@ -212,6 +212,21 @@ class Tree {
     }
     return undefined;
   }
+  depth(value) {
+    let node = this.root;
+    let step = 0;
+    while (node) {
+      if (value === node.data) {
+        return step;
+      } else if (value < node.data) {
+        node = node.left;
+      } else {
+        node = node.right;
+      }
+      step++;
+    }
+    return undefined;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
