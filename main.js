@@ -180,11 +180,12 @@ class Tree {
     return this.findHeightOf(node);
   }
   findHeightOf(root) {
-    if (!root) return 0;
+    if (!root) return -1;
     let res = 0;
     const queue = [[root, 0]];
-    while (queue.length !== 0) {
-      const [node, height] = queue.shift();
+    let i = 0;
+    while (i < queue.length) {
+      const [node, height] = queue[i++];
       res = Math.max(res, height);
       if (node.left) {
         queue.push([node.left, height + 1]);
@@ -223,6 +224,22 @@ class Tree {
     }
     return undefined;
   }
+  isBalanced() {
+    if (!this.root) return true;
+    const queue = [this.root];
+    let i = 0;
+    while (i < queue.length) {
+      const node = queue[i++];
+      const heightLeft = this.findHeightOf(node.left); // O(n)
+      const heightRight = this.findHeightOf(node.right); // O(n)
+      if (Math.abs(heightLeft - heightRight) > 1) {
+        return false;
+      }
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    return true;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -236,9 +253,15 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // craft
-const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
-prettyPrint(tree.root);
-console.log(tree.findNode(tree.root, 5));
-console.log(tree.findHeightOf(tree.findNode(tree.root, 5)));
+// const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
+// prettyPrint(tree.root);
+
+const tree1 = new Tree();
+tree1.insert(0);
+prettyPrint(tree1);
+tree1.insert(1);
+tree1.insert(2);
+tree1.insert(3);
+tree1.insert(4);
 
 export { Tree };
