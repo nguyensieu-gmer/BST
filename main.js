@@ -225,6 +225,12 @@ class Tree {
     if (Math.abs(left - right) > 1) return -1;
     return 1 + Math.max(left, right);
   }
+  rebalance() {
+    if (this.isBalanced()) return;
+    const sortedArray = [];
+    this.inOrderForEach((val) => sortedArray.push(val));
+    this.root = this.build(sortedArray, 0, sortedArray.length - 1);
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -238,8 +244,19 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // craft;
-const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
+const tree = new Tree();
+tree.insert(1);
+tree.insert(2);
+tree.insert(3);
+tree.insert(4);
+tree.insert(5);
+tree.insert(6);
+tree.insert(7);
+tree.insert(8);
+tree.insert(9);
+
 prettyPrint(tree.root);
-tree.inOrderForEach(console.log);
+tree.rebalance();
+prettyPrint(tree.root);
 
 export { Tree };
