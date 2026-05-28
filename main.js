@@ -244,19 +244,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 // craft;
-const tree = new Tree();
-tree.insert(1);
-tree.insert(2);
-tree.insert(3);
-tree.insert(4);
-tree.insert(5);
-tree.insert(6);
-tree.insert(7);
-tree.insert(8);
-tree.insert(9);
-
-prettyPrint(tree.root);
-tree.rebalance();
+const tree = new Tree([2, 10, 99, 4, 84, 32, 12, 65]);
 prettyPrint(tree.root);
 
 export { Tree };
