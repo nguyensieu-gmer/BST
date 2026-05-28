@@ -214,20 +214,16 @@ class Tree {
     return undefined;
   }
   isBalanced() {
-    if (!this.root) return true;
-    const queue = [this.root];
-    let i = 0;
-    while (i < queue.length) {
-      const node = queue[i++];
-      const heightLeft = this.findHeightOf(node.left); // O(n)
-      const heightRight = this.findHeightOf(node.right); // O(n)
-      if (Math.abs(heightLeft - heightRight) > 1) {
-        return false;
-      }
-      if (node.left) queue.push(node.left);
-      if (node.right) queue.push(node.right);
-    }
-    return true;
+    return this.checkBalanced(this.root) !== -1;
+  }
+  checkBalanced(root) {
+    if (!root) return 0;
+    const left = this.checkBalanced(root.left);
+    if (left === -1) return -1;
+    const right = this.checkBalanced(root.right);
+    if (right === -1) return -1;
+    if (Math.abs(left - right) > 1) return -1;
+    return 1 + Math.max(left, right);
   }
 }
 
@@ -241,8 +237,9 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
 };
 
-// craft
-// const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
-// prettyPrint(tree.root);
+// craft;
+const tree = new Tree([10, 10, 9, 9, 8, 7, 7, 7, 6, 5, 1, 1, 1, 2, 3, 3, 3, 4]);
+prettyPrint(tree.root);
+tree.inOrderForEach(console.log);
 
 export { Tree };
